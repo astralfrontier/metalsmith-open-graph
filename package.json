@@ -4,7 +4,7 @@
   "description": "A Metalsmith plugin for adding Facebook Opengraph metadata.",
   "main": "lib/index.js",
   "scripts": {
-    "build": "node_modules/.bin/coffee -c lib/index.coffee",
+    "prepackage": "node_modules/.bin/coffee -c lib/index.coffee",
     "test": "node_modules/.bin/mocha -r coffee-script/register test/index.coffee"
   },
   "keywords": [
