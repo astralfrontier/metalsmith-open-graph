@@ -64,7 +64,7 @@ processFile = (options, file) ->
 	if options.image?
 		# TODO: make this a fully qualified URL
 		image = findElementOrValue(file, $, options.image, image)
-		if options.siteurl?
+		if image && options.siteurl?
 			image = url.resolve(options.siteurl, image)
 
 	assignOg($, 'title', title)
