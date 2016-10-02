@@ -45,6 +45,7 @@ findElementOrValue = (file, $, value, defaultValue) ->
 		file[value] || defaultValue
 
 assignOg = ($, tag, value) ->
+	# TODO: don't overwrite existing OG tags
 	if value?
 		tag = $('<meta>').attr('property', "og:#{tag}").attr('content', value)
 		$('head').append(tag)
@@ -67,6 +68,12 @@ processFile = (options, file) ->
 		if image && options.siteurl?
 			image = url.resolve(options.siteurl, image)
 
+	# Add OG prefix to the HTML tag
+	# TODO: don't overwrite an existing prefix attribute
+	$('html').attr('prefix', 'og: http://ogp.me/ns#')
+
+	# Add OG tags
+	assignOg($, 'type', 'website')
 	assignOg($, 'title', title)
 	assignOg($, 'description', description)
 	assignOg($, 'image', image)

@@ -9,6 +9,29 @@ assertTag = (file, tag, expected) ->
 	assert.equal(expected, metaTag)
 
 describe 'metalsmith-open-graph', ->
+	describe 'prefix', ->
+		it 'should add a prefix declaration to the HTML tag', (done) ->
+			metalsmith = Metalsmith('test/fixtures/general')
+			metalsmith
+				.use(openGraph({}))
+				.build (err, files) ->
+					if err
+						return done(err)
+					$ = cheerio.load files['file.html'].contents
+					assert.equal 'og: http://ogp.me/ns#', $('html').attr('prefix')
+					done()
+
+	describe 'type', ->
+		it 'should add og:type website to all pages', (done) ->
+			metalsmith = Metalsmith('test/fixtures/general')
+			metalsmith
+				.use(openGraph({}))
+				.build (err, files) ->
+					if err
+						return done(err)
+					assertTag files['file.html'], 'type', 'website'
+					done()
+
 	describe 'title', ->
 		it 'should infer title from the HTML title element', (done) ->
 			metalsmith = Metalsmith('test/fixtures/title')
