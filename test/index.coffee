@@ -6,7 +6,7 @@ openGraph = require '../lib'
 assertTag = (file, tag, expected) ->
 	$ = cheerio.load(file.contents)
 	metaTag = $("meta[property='og:#{tag}']").attr('content')
-	assert.equal(expected, metaTag)
+	assert.equal metaTag, expected
 
 describe 'metalsmith-open-graph', ->
 	describe 'prefix', ->
@@ -18,7 +18,7 @@ describe 'metalsmith-open-graph', ->
 					if err
 						return done(err)
 					$ = cheerio.load files['file.html'].contents
-					assert.equal 'og: http://ogp.me/ns#', $('html').attr('prefix')
+					assert.equal $('html').attr('prefix'), 'og: http://ogp.me/ns#'
 					done()
 
 	describe 'site_name', ->
@@ -175,4 +175,14 @@ describe 'metalsmith-open-graph', ->
 					if err
 						return done(err)
 					assertTag files['file.html'], 'image', 'http://example.com/images/og.jpg'
+					done()
+
+		it 'should write multiple og:image tags', (done) ->
+			metalsmith = Metalsmith('test/fixtures/image')
+			metalsmith
+				.use(openGraph({image: '.image-candidate', siteurl: 'http://example.com/'}))
+				.build (err, files) ->
+					if err
+						return done(err)
+					assertTag files['fileMulti.html'], 'image', 'http://example.com/images/foo.jpg,http://example.com/images/bar.jpg'
 					done()

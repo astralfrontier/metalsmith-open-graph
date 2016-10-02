@@ -34,21 +34,28 @@ url = require 'url'
 
 findElementOrValue = (file, $, value, defaultValue) ->
 	if !value?
-		defaultValue
+		[defaultValue]
 	else if value.indexOf('.') == 0 || value.indexOf('#') == 0
-		element = $(value)
-		if element.is('img')
-			element.attr('src') || defaultValue
-		else
-			element.text() || defaultValue
+		values = []
+		$(value).each (i, elem) ->
+			element = $(this)
+			if element.is('img')
+				values.push(element.attr('src') || defaultValue)
+			else
+				values.push(element.text() || defaultValue)
+		values
 	else
-		file[value] || defaultValue
+		values = file[value] || defaultValue
+		if !Array.isArray(values)
+			values = [values]
+		values
 
-assignOg = ($, tag, value) ->
+assignOg = ($, tag, values) ->
 	# TODO: don't overwrite existing OG tags
-	if value?
-		tag = $('<meta>').attr('property', "og:#{tag}").attr('content', value)
-		$('head').append(tag)
+	if values? && values.length > 0
+		for value in values
+			tag = $('<meta>').attr('property', "og:#{tag}").attr('content', value)
+			$('head').append(tag)
 
 processFile = (options, file) ->
 	# TODO: weed out non-Cheerio options
@@ -64,8 +71,8 @@ processFile = (options, file) ->
 		description = findElementOrValue(file, $, options.description, description)
 	if options.image?
 		image = findElementOrValue(file, $, options.image, image)
-		if image && options.siteurl?
-			image = url.resolve(options.siteurl, image)
+		if image && image.length > 0 && options.siteurl?
+			image = (url.resolve(options.siteurl, img) for img in image when img?)
 
 	# Add OG prefix to the HTML tag
 	# TODO: don't overwrite an existing prefix attribute
@@ -73,11 +80,11 @@ processFile = (options, file) ->
 
 	# Add OG tags
 	if options.sitename?
-		assignOg($, 'site_name', options.sitename)
-	assignOg($, 'type', 'website')
-	assignOg($, 'title', title)
-	assignOg($, 'description', description)
-	assignOg($, 'image', image)
+		assignOg $, 'site_name', [options.sitename]
+	assignOg $, 'type', ['website']
+	assignOg $, 'title', [title]
+	assignOg $, 'description', [description]
+	assignOg $, 'image', [image]
 
 	# Return processed HTML
 	$.html()
