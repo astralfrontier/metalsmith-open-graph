@@ -21,6 +21,18 @@ describe 'metalsmith-open-graph', ->
 					assert.equal 'og: http://ogp.me/ns#', $('html').attr('prefix')
 					done()
 
+	describe 'site_name', ->
+		it 'should add a site_name meta tag when specified', (done) ->
+			metalsmith = Metalsmith('test/fixtures/general')
+			metalsmith
+				.use(openGraph({sitename: 'Terminus'}))
+				.build (err, files) ->
+					if err
+						return done(err)
+					$ = cheerio.load files['file.html'].contents
+					assertTag files['file.html'], 'site_name', 'Terminus'
+					done()
+
 	describe 'type', ->
 		it 'should add og:type website to all pages', (done) ->
 			metalsmith = Metalsmith('test/fixtures/general')
