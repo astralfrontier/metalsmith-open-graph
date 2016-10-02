@@ -63,7 +63,6 @@ processFile = (options, file) ->
 	if options.description?
 		description = findElementOrValue(file, $, options.description, description)
 	if options.image?
-		# TODO: make this a fully qualified URL
 		image = findElementOrValue(file, $, options.image, image)
 		if image && options.siteurl?
 			image = url.resolve(options.siteurl, image)
@@ -73,6 +72,8 @@ processFile = (options, file) ->
 	$('html').attr('prefix', 'og: http://ogp.me/ns#')
 
 	# Add OG tags
+	if options.sitename?
+		assignOg($, 'site_name', options.sitename)
 	assignOg($, 'type', 'website')
 	assignOg($, 'title', title)
 	assignOg($, 'description', description)

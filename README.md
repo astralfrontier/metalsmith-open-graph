@@ -15,12 +15,13 @@ metalsmith.use(open_graph({
 
 The following options are accepted:
 
+- `sitename`: the human-readable name for your site.
 - `siteurl`: the base URL for your site, for resolving relative image URLs.
 - `pattern`: a [minimatch](https://github.com/isaacs/minimatch) pattern.
   Only source files matching this pattern will be modified.
 - `title`: where to find the og:title tag. See below.
 - `description`: where to find the og:description tag. See below.
-- `url`: where to find the og:url tag. See below.
+- `image`: where to find the og:image tag. See below.
 
 Any other options are passed to [Cheerio](https://cheerio.js.org/),
 which does the actual HTML parsing behind the scenes.
@@ -48,6 +49,7 @@ metalsmith.use(open_graph({
   description: 'ogDescription',
   image: '.og-image'
 }))
+```
 
 And your input file is this:
 
