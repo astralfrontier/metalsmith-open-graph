@@ -1,0 +1,25 @@
+{
+  "name": "metalsmith-open-graph",
+  "version": "0.0.1",
+  "description": "A Metalsmith plugin for adding Facebook Opengraph metadata.",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "node_modules/.bin/coffee -c lib/index.coffee",
+    "test": "node_modules/.bin/mocha -r coffee-script/register test/index.coffee"
+  },
+  "keywords": [
+    "metalsmith",
+    "opengraph"
+  ],
+  "author": "Bill Garrett <garrett@astralfrontier.org>",
+  "license": "MIT",
+  "devDependencies": {
+    "coffee-script": "^1.11.1",
+    "metalsmith": "^2.2.0",
+    "mocha": "^3.1.0"
+  },
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "minimatch": "^3.0.3"
+  }
+}
