@@ -1,5 +1,6 @@
 cheerio = require 'cheerio'
 minimatch = require 'minimatch'
+url = require 'url'
 
 # The plugin will look for OG data in one of the following places:
 # 1. If an option is given as ".X", we look for the first element whose CSS class is "X".
@@ -63,6 +64,8 @@ processFile = (options, file) ->
 	if options.image?
 		# TODO: make this a fully qualified URL
 		image = findElementOrValue(file, $, options.image, image)
+		if options.siteurl?
+			image = url.resolve(options.siteurl, image)
 
 	assignOg($, 'title', title)
 	assignOg($, 'description', description)

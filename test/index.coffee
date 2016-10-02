@@ -132,3 +132,12 @@ describe 'metalsmith-open-graph', ->
 					assertTag files['file.html'], 'image', '/images/og.jpg'
 					done()
 
+		it 'should fully qualify an image URL', (done) ->
+			metalsmith = Metalsmith('test/fixtures/image')
+			metalsmith
+				.use(openGraph({image: 'myImage', siteurl: 'http://example.com/'}))
+				.build (err, files) ->
+					if err
+						return done(err)
+					assertTag files['file.html'], 'image', 'http://example.com/images/og.jpg'
+					done()
