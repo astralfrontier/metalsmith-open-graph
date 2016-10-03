@@ -1,5 +1,7 @@
 # metalsmith-open-graph
 
+[![Build Status](https://travis-ci.org/astralfrontier/metalsmith-open-graph.svg?branch=master)](https://travis-ci.org/astralfrontier/metalsmith-open-graph)
+
 This is a [Metalsmith](http://www.metalsmith.io/) plugin
 for adding Facebook [OpenGraph](http://ogp.me/) tags to a page.
 

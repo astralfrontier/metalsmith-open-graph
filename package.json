@@ -1,6 +1,6 @@
 {
   "name": "metalsmith-open-graph",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A Metalsmith plugin for adding Facebook Opengraph metadata.",
   "main": "lib/index.js",
   "scripts": {
