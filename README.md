@@ -19,6 +19,7 @@ metalsmith.use(open_graph({
 The following options are accepted:
 
 - `sitename`: the human-readable name for your site.
+- `sitetype`: the OG type of your site, from [this list](http://ogp.me/#types).
 - `siteurl`: the base URL for your site, for resolving relative image URLs.
 - `pattern`: a [minimatch](https://github.com/isaacs/minimatch) pattern.
   Only source files matching this pattern will be modified.
@@ -34,6 +35,11 @@ for the plugin to detect the final version of the page's URL
 when other plugins could be in play (e.g. permalink).
 If you know in advance what the URL is going to be,
 we can try specifying it in metadata somehow.
+
+## Type
+
+Some Open Graph types may require extra metadata.
+At present, it is not possible to specify this.
 
 ## Title, Description, Image
 

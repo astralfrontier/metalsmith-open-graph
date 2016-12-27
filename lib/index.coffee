@@ -61,10 +61,13 @@ processFile = (options, file) ->
 	# TODO: weed out non-Cheerio options
 	$ = cheerio.load file.contents, options
 
+	sitetype = 'website'
 	title = $("meta[name='title']").attr('content') || $('title').text()
 	description = $("meta[name='description']").attr('content')
 	image = undefined
 
+	if options.sitetype?
+		sitetype = options.sitetype
 	if options.title?
 		title = findElementOrValue(file, $, options.title, title)
 	if options.description?
@@ -81,7 +84,7 @@ processFile = (options, file) ->
 	# Add OG tags
 	if options.sitename?
 		assignOg $, 'site_name', [options.sitename]
-	assignOg $, 'type', ['website']
+	assignOg $, 'type', [sitetype]
 	assignOg $, 'title', [title]
 	assignOg $, 'description', [description]
 	assignOg $, 'image', [image]

@@ -34,7 +34,7 @@ describe 'metalsmith-open-graph', ->
 					done()
 
 	describe 'type', ->
-		it 'should add og:type website to all pages', (done) ->
+		it 'should add og:type website to all pages by default', (done) ->
 			metalsmith = Metalsmith('test/fixtures/general')
 			metalsmith
 				.use(openGraph({}))
@@ -42,6 +42,16 @@ describe 'metalsmith-open-graph', ->
 					if err
 						return done(err)
 					assertTag files['file.html'], 'type', 'website'
+					done()
+
+		it 'should add og:type if a sitetype is specified', (done) ->
+			metalsmith = Metalsmith('test/fixtures/general')
+			metalsmith
+				.use(openGraph({sitetype: 'article'}))
+				.build (err, files) ->
+					if err
+						return done(err)
+					assertTag files['file.html'], 'type', 'article'
 					done()
 
 	describe 'title', ->
