@@ -80,3 +80,10 @@ It will write the following HEAD tags:
 - og:title: "My Page"
 - og:description: "My awesome page description"
 - og:image: "http://mysite.io/images/awesome.jpg"
+
+## Common Problems and Workarounds
+
+### Cyrillic or other symbols are being encoded
+
+You can pass an option called `decodeEntities` with a value of false to disable this.
+Reported and solved by [Vitaliy Bobrov](https://github.com/vitaliy-bobrov)
